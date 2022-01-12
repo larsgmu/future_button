@@ -6,8 +6,8 @@ repository: https://github.com/kekland/future_button
 issue_tracker: https://github.com/kekland/future_button/issues
 
 environment:
-  sdk: '>=2.12.0 <3.0.0'
-  flutter: ">=1.17.0 <2.0.0"
+  sdk: ">=2.15.1 <3.0.0"
+  
 
 dependencies:
   flutter:

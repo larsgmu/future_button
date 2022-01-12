@@ -24,8 +24,8 @@ class MyHomePage extends StatefulWidget {
   final String title;
 
   MyHomePage({
-    Key key,
-    this.title,
+    Key? key,
+    required this.title,
   }) : super(key: key);
 
   @override
