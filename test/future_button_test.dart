@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -19,13 +21,13 @@ final successIndicatorBuilder = defaultSuccessResultIndicatorBuilder;
 final failureIndicatorBuilder = defaultFailureResultIndicatorBuilder;
 
 typedef FutureButtonBuilder = Widget Function({
-  FutureCallback onPressed,
-  WidgetBuilder progressIndicatorBuilder,
-  WidgetBuilder successIndicatorBuilder,
-  WidgetBuilder failureIndicatorBuilder,
-  bool showResult,
-  Widget child,
-  ProgressIndicatorLocation progressIndicatorLocation,
+  FutureCallback? onPressed,
+  WidgetBuilder? progressIndicatorBuilder,
+  WidgetBuilder? successIndicatorBuilder,
+  WidgetBuilder? failureIndicatorBuilder,
+  bool? showResult,
+  Widget? child,
+  ProgressIndicatorLocation? progressIndicatorLocation,
 });
 
 Future<void> waitForAndFail() async {
@@ -49,19 +51,19 @@ Future<void> testButtonWithArgs(
   WidgetTester tester, {
   List<ProgressIndicatorLocation> progressIndicatorLocations =
       ProgressIndicatorLocation.values,
-  FutureButtonBuilder builder,
-  FutureCallback onTap,
+  FutureButtonBuilder? builder,
+  FutureCallback? onTap,
   bool shouldError = false,
   bool shouldShowResultIndicator = false,
 }) async {
   for (final progressIndicatorLocation in progressIndicatorLocations) {
     for (final progressIndicatorBuilder in progressIndicatorBuilders) {
       final child = Container();
-      final progressIndicator = progressIndicatorBuilder(null);
-      final successIndicator = progressIndicatorBuilder(null);
-      final failureIndicator = progressIndicatorBuilder(null);
+      var progressIndicator;// = progressIndicatorBuilder();
+      var successIndicator;// = progressIndicatorBuilder();
+      var failureIndicator;// = progressIndicatorBuilder();
 
-      final widget = builder(
+      final widget = builder!(
         onPressed: onTap,
         progressIndicatorBuilder: (_) => progressIndicator,
         successIndicatorBuilder: (_) => successIndicator,
@@ -153,8 +155,8 @@ Future<void> testButtonWithArgs(
 }
 
 void testButton({
-  String name,
-  FutureButtonBuilder builder,
+  String? name,
+  FutureButtonBuilder? builder,
   List<ProgressIndicatorLocation> progressIndicatorLocations =
       ProgressIndicatorLocation.values,
 }) {
@@ -215,13 +217,13 @@ void main() {
   testButton(
     name: 'FutureCupertinoButton',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureCupertinoButton(
         child: child,
@@ -241,13 +243,13 @@ void main() {
   testButton(
     name: 'FutureCupertinoButton.filled',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureCupertinoButton.filled(
         child: child,
@@ -267,13 +269,13 @@ void main() {
   testButton(
     name: 'FutureFlatButton',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureFlatButton(
         child: child,
@@ -293,13 +295,13 @@ void main() {
   testButton(
     name: 'FutureFlatButton.icon',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureFlatButton.icon(
         icon: Icon(Icons.star),
@@ -320,13 +322,13 @@ void main() {
     name: 'FutureIconButton',
     progressIndicatorLocations: [ProgressIndicatorLocation.center],
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureIconButton(
         icon: child,
@@ -345,13 +347,13 @@ void main() {
   testButton(
     name: 'FutureOutlineButton',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureOutlineButton(
         child: child,
@@ -371,13 +373,13 @@ void main() {
   testButton(
     name: 'FutureOutlineButton.icon',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureOutlineButton.icon(
         icon: Icon(Icons.star),
@@ -398,13 +400,13 @@ void main() {
   testButton(
     name: 'FutureRaisedButton',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureRaisedButton(
         child: child,
@@ -424,13 +426,13 @@ void main() {
   testButton(
     name: 'FutureRaisedButton.icon',
     builder: ({
-      FutureCallback onPressed,
-      WidgetBuilder progressIndicatorBuilder,
-      WidgetBuilder successIndicatorBuilder,
-      WidgetBuilder failureIndicatorBuilder,
-      bool showResult,
-      Widget child,
-      ProgressIndicatorLocation progressIndicatorLocation,
+      FutureCallback? onPressed,
+      WidgetBuilder? progressIndicatorBuilder,
+      WidgetBuilder? successIndicatorBuilder,
+      WidgetBuilder? failureIndicatorBuilder,
+      bool? showResult,
+      Widget? child,
+      ProgressIndicatorLocation? progressIndicatorLocation,
     }) {
       return FutureRaisedButton.icon(
         icon: Icon(Icons.star),

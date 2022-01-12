@@ -80,16 +80,16 @@ abstract class GenericFutureButtonWidget extends StatefulWidget {
   /// A callback of type `Future<void> Function()`. This will be ran when user presses on the button.
   /// If the future is in progress, the loading indicator will be displayed.
   /// When the future completes (regardless if successful or not), the loading indicator will dissapear.
-  final FutureCallback onPressed;
+  final FutureCallback? onPressed;
 
   /// The widget that's used as the progress indicator.
   /// You can substitute it with your own progress indicator if necessary.
   /// See [defaultMaterialProgressIndicatorBuilder] and [defaultCupertinoProgressIndicatorBuilder] for more info.
-  final WidgetBuilder progressIndicatorBuilder;
+  final WidgetBuilder? progressIndicatorBuilder;
 
   /// The child of the widget. Usually a [Text] widget.
   /// It will be hidden if [progressIndicatorLocation] is [ProgressIndicatorLocation.center] and future is in progress.
-  final Widget child;
+  final Widget? child;
 
   /// The location of progress indicator.
   /// See [ProgressIndicatorLocation] for more info.
@@ -98,7 +98,7 @@ abstract class GenericFutureButtonWidget extends StatefulWidget {
   /// Whether to show the result of the Future.
   /// Will show [successIndicatorBuilder] if Future completes without errors.
   /// Otherwise, will show [failureIndicatorBuilder].
-  final bool showResult;
+  final bool? showResult;
 
   /// Whether to animate the transitions using [AnimatedSwitcher].
   /// Defaults to [true].
@@ -106,11 +106,11 @@ abstract class GenericFutureButtonWidget extends StatefulWidget {
 
   /// Indicator to show when the Future is completed successfully.
   /// Defaults to [defaultSuccessResultIndicatorBuilder].
-  final WidgetBuilder successIndicatorBuilder;
+  final WidgetBuilder? successIndicatorBuilder;
 
   /// Indicator to show when the Future fails.
   /// Defaults to [defaultFailureResultIndicatorBuilder].
-  final WidgetBuilder failureIndicatorBuilder;
+  final WidgetBuilder? failureIndicatorBuilder;
 
   /// For how long should the result be shown for.
   /// Default to `Duration(seconds: 2)`.
@@ -125,18 +125,18 @@ abstract class GenericFutureButtonWidget extends StatefulWidget {
   final Duration animationDuration;
 
   const GenericFutureButtonWidget({
-    Key key,
-    @required this.onPressed,
-    @required this.child,
+    Key? key,
+    required this.onPressed,
+    required this.child,
     this.progressIndicatorBuilder,
     this.successIndicatorBuilder,
     this.failureIndicatorBuilder,
     this.showResult = false,
     this.animateTransitions = true,
-    ProgressIndicatorLocation progressIndicatorLocation,
-    Curve animationCurve,
-    Duration animationDuration,
-    Duration resultIndicatorDuration,
+    ProgressIndicatorLocation? progressIndicatorLocation,
+    Curve? animationCurve,
+    Duration? animationDuration,
+    Duration? resultIndicatorDuration,
   })  : progressIndicatorLocation =
             progressIndicatorLocation ?? ProgressIndicatorLocation.left,
         animationDuration =
@@ -162,7 +162,7 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
   /// The builder for the indicator.
   /// Returned widget is dependent on [_state] and can be one of
   /// [_successIndicatorBuilder], [_failureIndicatorBuilder] or [_progressIndicatorBuilder].
-  WidgetBuilder get _indicatorBuilder {
+  WidgetBuilder? get _indicatorBuilder {
     switch (_state) {
       case FutureButtonState.success:
         return _successIndicatorBuilder;
@@ -194,7 +194,7 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
   /// [TextDirection] is used to indicate the order of the widgets in the button.
   /// If [widget.progressIndicatorLocation] is [ProgressIndicatorLocation.left], the order is normal.
   /// Otherwise, the order is reversed.
-  TextDirection get textDirection {
+  TextDirection? get textDirection {
     switch (widget.progressIndicatorLocation) {
       case ProgressIndicatorLocation.left:
         return TextDirection.ltr;
@@ -207,7 +207,7 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
 
   /// Aligning the animation correctly is important.
   /// Here the animation must be aligned to the opposite side of the progress indicator so that the text doesn't get cut off.
-  Alignment get animationAlignment {
+  Alignment? get animationAlignment {
     switch (widget.progressIndicatorLocation) {
       case ProgressIndicatorLocation.left:
         return Alignment.centerRight;
@@ -224,14 +224,14 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
   /// If the future is completed or not running, the body is [widget.child].
   /// If the future is running and [widget.progressIndicatorLocation] is [ProgressIndicatorLocation.center], it'll display the progress indicator only.
   /// If the future is running and [widget.progressIndicatorLocation] is not [ProgressIndicatorLocation.center], it'll display the progress indicator and the child. The order depends on [textDirection].
-  Widget get child {
-    Widget child;
+  Widget? get child {
+    Widget? child;
 
     if (!isLoading) {
       child = widget.child;
     } else if (widget.progressIndicatorLocation ==
         ProgressIndicatorLocation.center) {
-      child = _indicatorBuilder(context);
+      child = _indicatorBuilder!(context);
     } else {
       return Row(
         mainAxisSize: MainAxisSize.min,
@@ -241,10 +241,10 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
             duration: widget.animationDuration,
             switchInCurve: widget.animationCurve,
             switchOutCurve: widget.animationCurve,
-            child: _indicatorBuilder(context),
+            child: _indicatorBuilder!(context),
           ),
           SizedBox(width: 8.0),
-          widget.child,
+          widget.child!,
         ],
       );
     }
@@ -266,14 +266,14 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
       _state = FutureButtonState.progress;
     });
 
-    Exception error;
+    Exception? error;
     try {
-      await widget.onPressed();
+      await widget.onPressed!();
     } catch (e) {
-      error = e;
+      error = e as Exception?;
     }
 
-    if (!widget.showResult) {
+    if (!widget.showResult!) {
       setState(() {
         _state = FutureButtonState.normal;
       });
@@ -299,9 +299,9 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
   /// This is an abstract function that's dependent on the button type.
   /// See [FutureRaisedButton] or other buttons for implementation details.
   Widget buildButton({
-    BuildContext context,
-    Widget child,
-    VoidCallback onPressed,
+    BuildContext? context,
+    Widget? child,
+    VoidCallback? onPressed,
   });
 
   @override
@@ -312,7 +312,7 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
         vsync: this,
         duration: widget.animationDuration,
         curve: widget.animationCurve,
-        alignment: animationAlignment,
+        alignment: animationAlignment!,
         child: child,
       ),
       onPressed: isEnabled ? onPressed : null,
