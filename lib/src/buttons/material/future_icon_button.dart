@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:future_button/src/generic_future_button.dart';
 
 /// A Future version of the material [IconButton].

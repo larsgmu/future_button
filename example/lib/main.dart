@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:future_button/future_button.dart';
 
@@ -53,23 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            FutureRaisedButton(
-              child: Text('Load'),
-              onPressed: waitFor,
-              showResult: true,
-            ),
-            FutureRaisedButton(
-              child: Text('Load (right)'),
-              onPressed: waitForAndFail,
-              progressIndicatorLocation: ProgressIndicatorLocation.right,
-              showResult: true,
-            ),
-            FutureRaisedButton.icon(
-              icon: Icon(Icons.star),
-              label: Text('Star'),
-              onPressed: waitFor,
-              showResult: false,
-            ),
             FutureIconButton(
               icon: Icon(Icons.link),
               onPressed: waitFor,

@@ -309,7 +309,6 @@ abstract class GenericFutureButtonState<T extends GenericFutureButtonWidget>
     return buildButton(
       context: context,
       child: AnimatedSize(
-        vsync: this,
         duration: widget.animationDuration,
         curve: widget.animationCurve,
         alignment: animationAlignment!,
